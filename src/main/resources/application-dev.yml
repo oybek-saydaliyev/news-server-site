@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    username: postgres
+    password: 1234
+    url: "jdbc:postgresql://localhost:5432/news_server_site"
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+
+    generate-ddl: on
+
