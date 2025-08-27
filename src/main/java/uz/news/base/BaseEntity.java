@@ -1,12 +1,19 @@
 package uz.news.base;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
+
+@Getter
+@Setter
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public class BaseEntity {
@@ -14,7 +21,6 @@ public class BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //    LocalDateTime localDateTime = LocalDateTime.now(ZoneId.of("Asia/Tokyo"));
     @CreationTimestamp
     @Column(name = "created_at")
     private LocalDateTime createdAt;
@@ -23,20 +29,17 @@ public class BaseEntity {
     @Column(name = "created_by")
     private Long createdBy;
 
+    @LastModifiedBy
+    @Column(name = "last_modified_by")
+    private Long modifiedBy;
+
+    @LastModifiedDate
+    @Column(name = "last_modified_date")
+    private LocalDateTime lastModifiedDate;
 
     private Boolean deleted = false;
 
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
 
     public BaseEntity (LocalDateTime createdAt) {
         this.createdAt = createdAt;
@@ -46,27 +49,5 @@ public class BaseEntity {
     }
 
     public BaseEntity() {
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-
-    public Boolean getDeleted() {
-        return deleted;
-    }
-
-    public Long getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(Long createdBy) {
-        this.createdBy = createdBy;
-    }
-
-
-    public void setDeleted(Boolean deleted) {
-        this.deleted = deleted;
     }
 }
