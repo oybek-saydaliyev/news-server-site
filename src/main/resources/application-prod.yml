@@ -1,1 +1,37 @@
-spring.application.name=new-site-server
+
+spring:
+  datasource:
+    username: postgres
+    password: 1234
+    url: "jdbc:postgresql://localhost:5432/news_server_site"
+    driver-class-name: org.postgresql.Driver
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    generate-ddl: off
+
+springdoc:
+  show-actuator: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*" #health,info,metrics
+
+
+jwt:
+  secret:
+    access: bXlWZXJ5U2VjcmV0S2V5Rm9yQWNjZXNzVG9rZW5UaGF0SXNMb25nRW5vdWdoMTIzNDU2
+    refresh: bXlWZXJ5U2VjcmV0S2V5Rm9yUmVmcmVzaFRva2VuVGhhdElzTG9uZ0Vub3VnaDY1NDMyMQ==
+  expiration:
+    access: 900000
+    refresh: 604800000
+
+
+server:
+  port: 7878

@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 @Getter
 @Setter
 public class ApiResponse<T> {
-    @JsonIgnore
     private int code;
     private String message;
     private T object;
