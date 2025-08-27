@@ -22,7 +22,8 @@ public class SwaggerConfig implements WebMvcConfigurer {
                         .title("API Documentation")
                         .version("1.0")
                         .description("Spring Security API Documentation"))
-                .servers(List.of(new Server().url("http://localhost:8080").description("Local Server")))
+                .servers(List.of(new Server().url("http://vmi2413425.contaboserver.net:7878").description("Prod Server"),
+                        new Server().url("http://localhost:8080").description("Local Server")))
                 .components(new Components()
                         .addSecuritySchemes("bearerAuth", new SecurityScheme()
                                 .type(SecurityScheme.Type.HTTP)

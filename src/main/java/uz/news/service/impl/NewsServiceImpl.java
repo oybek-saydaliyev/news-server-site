@@ -83,7 +83,13 @@ public class NewsServiceImpl implements NewsService {
     @Override
     public ApiResponse<?> getAll(String search, Long categoryId, LocalDateTime from, LocalDateTime to) {
         try {
-            List<NewsEntity> all = newsRepository.findAllBySearchAndCategoryIdAndBetweenDate(search, categoryId, from, to);
+            List<NewsEntity> all;
+
+            if (from != null && to != null) {
+                all = newsRepository.findAllByFilterWithDateRange(search, categoryId, from, to);
+            } else {
+                all = newsRepository.findAllByFilterWithoutDateRange(search, categoryId);
+            }
             return new ApiResponse<>(200, ResMessages.SUCCESS, all);
         }catch (Exception e){
             log.error("Error getting news", e);

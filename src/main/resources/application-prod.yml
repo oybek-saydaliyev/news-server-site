@@ -1,9 +1,9 @@
 
 spring:
   datasource:
-    username: postgres
-    password: 1234
-    url: "jdbc:postgresql://localhost:5432/news_server_site"
+    username: oybek_news
+    password: cmRRGCfPO\GTQ/Xa
+    url: "jdbc:postgresql://localhost:5432/oybek_news_server_site"
     driver-class-name: org.postgresql.Driver
   flyway:
     enabled: true
@@ -21,7 +21,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: "*" #health,info,metrics
+        include: health,info,metrics
 
 
 jwt:

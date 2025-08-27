@@ -78,10 +78,10 @@ public class NewsController {
 
     //public
     @GetMapping("/public/news")
-    public ResponseEntity<?> getAllPublic(@RequestParam String search,
-                                          @RequestParam Long categoryId,
-                                          @RequestParam LocalDateTime from,
-                                          @RequestParam LocalDateTime to){
+    public ResponseEntity<?> getAllPublic(@RequestParam(required = false) String search,
+                                          @RequestParam(required = false) Long categoryId,
+                                          @RequestParam(required = false) LocalDateTime from,
+                                          @RequestParam(required = false) LocalDateTime to){
         return ApiResponse.controller(newsService.getAll(search, categoryId, from, to));
     }
 

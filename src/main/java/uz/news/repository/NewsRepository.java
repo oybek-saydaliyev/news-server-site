@@ -13,18 +13,38 @@ import java.util.Optional;
 public interface NewsRepository extends BaseRepository<NewsEntity> {
     List<NewsEntity> findAllByStatusAndCreatedByAndCategory_Id(Status status, Long createdBy, Long categoryId);
 
-    @Query("""
-            SELECT n FROM news n 
-            WHERE (:categoryId IS NULL OR n.category.id = :categoryId) 
-            AND (:search IS NULL OR LOWER(n.title) LIKE LOWER(CONCAT('%', :search, '%')) 
-            OR LOWER(n.content) LIKE LOWER(CONCAT('%', :search, '%'))) 
-            AND (n.createdAt BETWEEN :fromDate AND :toDate) 
-            AND n.status = 'PUBLISHED' 
-            AND n.deleted = false""")
-    List<NewsEntity> findAllBySearchAndCategoryIdAndBetweenDate(@Param("search") String search,
-                                                                @Param("categoryId") Long categoryId,
-                                                                @Param("fromDate") LocalDateTime from,
-                                                                @Param("toDate") LocalDateTime to);
+    @Query(value = """
+    SELECT * 
+    FROM news n
+    WHERE (:categoryId IS NULL OR n.category_id = :categoryId)
+      AND (
+           COALESCE(:search, '') = '' 
+           OR LOWER(n.title) LIKE LOWER(CONCAT('%', :search, '%')) 
+           OR LOWER(n.content) LIKE LOWER(CONCAT('%', :search, '%'))
+          )
+      AND n.created_at BETWEEN :fromDate AND :toDate
+      AND n.status = 'PUBLISHED'
+      AND n.deleted = false
+""", nativeQuery = true)
+    List<NewsEntity> findAllByFilterWithDateRange(@Param("search") String search,
+                                                  @Param("categoryId") Long categoryId,
+                                                  @Param("fromDate") LocalDateTime from,
+                                                  @Param("toDate") LocalDateTime to);
+
+    @Query(value = """
+    SELECT * 
+    FROM news n
+    WHERE (:categoryId IS NULL OR n.category_id = :categoryId)
+      AND (
+           COALESCE(:search, '') = '' 
+           OR LOWER(n.title) LIKE LOWER(CONCAT('%', :search, '%')) 
+           OR LOWER(n.content) LIKE LOWER(CONCAT('%', :search, '%'))
+          )
+      AND n.status = 'PUBLISHED'
+      AND n.deleted = false
+""", nativeQuery = true)
+    List<NewsEntity> findAllByFilterWithoutDateRange(@Param("search") String search,
+                                                     @Param("categoryId") Long categoryId);
 
 
     @Query("select news from news where status =:status and id =:id")
